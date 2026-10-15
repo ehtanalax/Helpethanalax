@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Help Center | Ethan Alax &amp; Co.</title>
+<meta name="description" content="Ethan Alax &amp; Co. Help Center. Send us a message and our team will get back to you.">
+<meta name="theme-color" content="#3fbe70">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{--green:#3fbe70;--ink:#0f2a1c;--font:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;font-family:var(--font);color:#fff;line-height:1.5;display:flex;flex-direction:column;min-height:100vh;overflow-x:hidden;background:#1b4f9c}
+
+  /* ---------- Live Swiss Alps scene ---------- */
+  .scene{position:fixed;inset:0;z-index:-2;overflow:hidden}
+  .scene svg,.scene video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .scene video{display:none}
+  .shade{position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(8,35,80,.38) 0%,rgba(8,35,80,0) 45%,rgba(5,25,50,.25) 100%)}
+
+  .far{animation:pan 40s ease-in-out infinite alternate}
+  .mid{animation:pan 30s ease-in-out infinite alternate-reverse}
+  .near{animation:pan 22s ease-in-out infinite alternate}
+  @keyframes pan{from{transform:translateX(-14px)}to{transform:translateX(14px)}}
+  .sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 5s ease-in-out infinite alternate}
+  @keyframes sway{from{transform:rotate(-1.6deg)}to{transform:rotate(1.6deg)}}
+  .glow{animation:glow 7s ease-in-out infinite alternate}
+  @keyframes glow{from{opacity:.7}to{opacity:1}}
+  .sparkle{animation:sparkle 3.2s ease-in-out infinite alternate}
+  @keyframes sparkle{from{opacity:.1;transform:translateX(-18px)}to{opacity:.55;transform:translateX(18px)}}
+  .mist{animation:mist 18s ease-in-out infinite alternate}
+  @keyframes mist{from{opacity:.35;transform:translateX(-30px)}to{opacity:.7;transform:translateX(30px)}}
+  .flag{transform-box:fill-box;transform-origin:0 50%;animation:flag 1.3s ease-in-out infinite alternate}
+  @keyframes flag{from{transform:skewY(-6deg) scaleX(1)}to{transform:skewY(6deg) scaleX(.88)}}
+  .win{animation:win 4s ease-in-out infinite alternate}
+  @keyframes win{from{opacity:.65}to{opacity:1}}
+  @media (prefers-reduced-motion:reduce){.scene *{animation:none!important}.scene animate,.scene animateTransform,.scene animateMotion{display:none}}
+
+  /* ---------- Page ---------- */
+  main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px 16px;text-align:center}
+  h1{margin:0;font-size:clamp(1.6rem,6.5vw,3.8rem);font-weight:800;letter-spacing:.05em;text-shadow:0 3px 22px rgba(5,30,70,.55)}
+  .sub{margin:6px 0 0;font-size:clamp(1.1rem,2.8vw,1.5rem);font-weight:600;text-shadow:0 2px 14px rgba(5,30,70,.55)}
+  .tag{margin:6px 0 20px;font-size:1.05rem;text-shadow:0 2px 12px rgba(5,30,70,.55)}
+
+  .card{width:100%;max-width:480px;background:rgba(255,255,255,.93);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);color:var(--ink);border-radius:18px;padding:24px 28px;text-align:left;
+    box-shadow:0 24px 60px rgba(5,30,70,.4);animation:rise .9s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  .card h2{margin:0 0 14px;font-size:1.35rem}
+  .lead{margin:0 0 16px;color:#4d6657;font-size:.95rem}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+  .chip{font:inherit;font-size:.88rem;font-weight:600;color:#1d5a37;background:#e7f6ed;border:1px solid #bfe3cd;border-radius:999px;padding:7px 14px;height:auto;width:auto;margin:0;letter-spacing:0;cursor:pointer}
+  .chip:hover{filter:none;background:#d6f0e0}
+  .chip[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#06210f}
+  .field{margin:0 0 12px}
+  label{display:block;margin:0 0 6px;font-weight:600;font-size:.92rem}
+  input,textarea{display:block;width:100%;margin:0;font:inherit;font-size:1rem;color:var(--ink);background:#f3f7f5;border:1px solid #cfdcd4;border-radius:8px;padding:12px 14px}
+  input{height:48px}
+  textarea{min-height:84px;resize:vertical}
+  input:focus-visible,textarea:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offset:1px}
+  .send{display:block;width:100%;height:52px;margin-top:6px;font:inherit;font-weight:800;letter-spacing:.08em;background:var(--green);color:#06210f;border:0;border-radius:10px;cursor:pointer;transition:transform .15s,box-shadow .15s}
+  .send:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(63,190,112,.45)}
+  #status{margin:12px 0 0;min-height:1.4em;font-weight:600;font-size:.92rem;color:#1d7a46}
+  .mail{margin:16px 0 0;text-align:center;font-size:.92rem;color:#4d6657}
+  .mail a{color:#1d7a46;font-weight:600}
+  footer{text-align:center;padding:18px 20px 22px;font-size:.9rem;text-shadow:0 1px 10px rgba(5,30,70,.7)}
+  @media (max-width:520px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+
+<div class="scene" aria-hidden="true">
+  <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#1b4f9c"/><stop offset=".45" stop-color="#5aa5e3"/><stop offset=".72" stop-color="#bcdcf3"/><stop offset="1" stop-color="#ffdcb8"/>
+      </linearGradient>
+      <radialGradient id="sun"><stop offset="0" stop-color="#fff6d8"/><stop offset=".25" stop-color="#ffe3a3" stop-opacity=".9"/><stop offset="1" stop-color="#ffcf8a" stop-opacity="0"/></radialGradient>
+      <linearGradient id="farG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6f8fbd"/><stop offset="1" stop-color="#b9cde6"/></linearGradient>
+      <linearGradient id="midG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3f6f66"/><stop offset="1" stop-color="#6c9a86"/></linearGradient>
+      <linearGradient id="lakeG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6fb8dc"/><stop offset="1" stop-color="#1b5d8c"/></linearGradient>
+      <linearGradient id="mistG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".6" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <filter id="soft" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="9"/></filter>
+      <g id="pine"><rect x="-3" y="-6" width="6" height="14" fill="#3b2a1e"/><polygon points="0,-96 -22,-52 -10,-52 -30,-18 -12,-18 -36,8 36,8 12,-18 30,-18 10,-52 22,-52" fill="#1f5a33"/><polygon points="0,-96 -9,-76 9,-76" fill="#eaf4f0" opacity=".9"/></g>
+      <g id="cloud"><ellipse cx="0" cy="0" rx="120" ry="26"/><ellipse cx="-50" cy="-16" rx="52" ry="28"/><ellipse cx="30" cy="-24" rx="62" ry="34"/><ellipse cx="85" cy="-4" rx="46" ry="22"/></g>
+    </defs>
+
+    <!-- sky + sun -->
+    <rect width="1600" height="900" fill="url(#sky)"/>
+    <g class="glow"><circle cx="420" cy="560" r="330" fill="url(#sun)"/></g>
+    <circle cx="420" cy="548" r="46" fill="#fffaf0"/>
+
+    <!-- hot air balloon -->
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="0 0; 60 -18; 120 6; 60 -18; 0 0" dur="40s" repeatCount="indefinite"/>
+      <g transform="translate(470 250)">
+        <animateTransform attributeName="transform" additive="sum" type="translate" values="0 0;0 -8;0 0" dur="6s" repeatCount="indefinite"/>
+        <ellipse cx="0" cy="0" rx="34" ry="42" fill="#e8453c"/>
+        <path d="M-34 0 Q-17 -42 0 -42 Q-17 -4 -8 40 Q-30 28 -34 0Z" fill="#fff" opacity=".9"/>
+        <path d="M34 0 Q17 -42 0 -42 Q17 -4 8 40 Q30 28 34 0Z" fill="#fff" opacity=".9"/>
+        <path d="M-12 38 L-8 62 M12 38 L8 62" stroke="#5a3a22" stroke-width="2"/>
+        <rect x="-10" y="62" width="20" height="14" rx="2" fill="#8a5a33"/>
+      </g>
+    </g>
+
+    <!-- clouds -->
+    <g fill="#fff" filter="url(#soft)">
+      <use href="#cloud" opacity=".9" transform="translate(0 130) scale(1.2)"><animateTransform attributeName="transform" type="translate" values="-300 130;1900 130" dur="110s" begin="-30s" repeatCount="indefinite"/></use>
+      <use href="#cloud" opacity=".7" transform="translate(0 250)"><animateTransform attributeName="transform" type="translate" values="-300 250;1900 250" dur="150s" begin="-90s" repeatCount="indefinite"/></use>
+      <use href="#cloud" opacity=".8" transform="translate(0 70) scale(.9)"><animateTransform attributeName="transform" type="translate" values="-300 70;1900 70" dur="130s" begin="-10s" repeatCount="indefinite"/></use>
+    </g>
+
+    <!-- birds -->
+    <g fill="none" stroke="#1a2b3c" stroke-width="2.4" stroke-linecap="round">
+      <path d="M0 0 q7 -8 14 0 q7 -8 14 0"><animate attributeName="d" values="M0 0 q7 -8 14 0 q7 -8 14 0;M0 0 q7 4 14 0 q7 4 14 0;M0 0 q7 -8 14 0 q7 -8 14 0" dur=".9s" repeatCount="indefinite"/><animateMotion path="M-60 330 C 400 250, 900 380, 1700 290" dur="28s" repeatCount="indefinite"/></path>
+      <path d="M0 0 q6 -7 12 0 q6 -7 12 0"><animate attributeName="d" values="M0 0 q6 -7 12 0 q6 -7 12 0;M0 0 q6 3 12 0 q6 3 12 0;M0 0 q6 -7 12 0 q6 -7 12 0" dur=".8s" repeatCount="indefinite"/><animateMotion path="M-90 350 C 350 290, 950 420, 1700 330" dur="28s" begin="-1.5s" repeatCount="indefinite"/></path>
+      <path d="M0 0 q5 -6 10 0 q5 -6 10 0"><animate attributeName="d" values="M0 0 q5 -6 10 0 q5 -6 10 0;M0 0 q5 3 10 0 q5 3 10 0;M0 0 q5 -6 10 0 q5 -6 10 0" dur=".7s" repeatCount="indefinite"/><animateMotion path="M-120 310 C 300 240, 1000 360, 1700 270" dur="32s" begin="-4s" repeatCount="indefinite"/></path>
+    </g>
+
+    <!-- far range with the Matterhorn -->
+    <g class="far"><g transform="translate(350 0)">
+      <path d="M-900 700 L-700 560 L-520 620 L-340 520 L-200 600 L-120 650 L120 540 L230 590 L360 500 L470 600 L620 520 L740 610 L840 480 L880 400 L905 330 L925 345 L950 420 L1010 500 L1060 560 L1150 520 L1280 600 L1400 530 L1520 590 L1700 540 L1700 720 L-900 720Z" fill="url(#farG)"/>
+      <path d="M880 400 L905 330 L925 345 L950 420 L930 404 L915 432 L900 410 L885 436Z" fill="#fff" opacity=".96"/>
+      <path d="M335 520 L360 500 L385 526 L368 516 L355 532Z M600 536 L620 520 L642 540 L626 532 L612 544Z M1385 546 L1400 530 L1418 548 L1404 542 L1394 552Z M100 556 L120 540 L142 560 L126 553 L112 564Z" fill="#fff" opacity=".9"/>
+      <path d="M905 330 L925 345 L950 420 L1010 500 L1060 560 L980 560 L940 470Z" fill="#3a5a8a" opacity=".28"/>
+    </g></g>
+
+    <!-- mid hills -->
+    <g class="mid">
+      <path d="M-120 700 Q200 600 450 670 T900 650 T1350 680 T1700 640 L1700 750 L-120 750Z" fill="url(#midG)"/>
+      <g class="sway"><use href="#pine" transform="translate(520 676) scale(.35)"/></g>
+      <g class="sway" style="animation-delay:-2s"><use href="#pine" transform="translate(556 672) scale(.3)"/></g>
+      <g class="sway" style="animation-delay:-1s"><use href="#pine" transform="translate(1010 662) scale(.32)"/></g>
+      <g class="sway" style="animation-delay:-3s"><use href="#pine" transform="translate(1046 668) scale(.28)"/></g>
+    </g>
+
+    <!-- lake -->
+    <rect x="-120" y="745" width="1840" height="170" fill="url(#lakeG)"/>
+    <ellipse cx="420" cy="790" rx="26" ry="60" fill="#fff4d6" opacity=".35"/>
+    <rect class="mist" x="-120" y="708" width="1840" height="60" fill="url(#mistG)"/>
+    <g fill="#fff">
+      <rect class="sparkle" x="330" y="772" width="90" height="3" rx="1.5"/>
+      <rect class="sparkle" style="animation-delay:-1s" x="350" y="788" width="60" height="3" rx="1.5"/>
+      <rect class="sparkle" style="animation-delay:-2s" x="320" y="806" width="110" height="3" rx="1.5"/>
+      <rect class="sparkle" style="animation-delay:-.5s" x="520" y="790" width="120" height="3" rx="1.5"/>
+      <rect class="sparkle" style="animation-delay:-1.6s" x="700" y="820" width="150" height="3" rx="1.5"/>
+      <rect class="sparkle" style="animation-delay:-2.4s" x="360" y="850" width="130" height="3" rx="1.5"/>
+      <rect class="sparkle" style="animation-delay:-.8s" x="900" y="860" width="170" height="3" rx="1.5"/>
+    </g>
+
+    <!-- foreground left: chalet, flag, pines -->
+    <g class="near">
+      <path d="M-160 900 L-160 760 Q150 690 400 770 Q520 810 600 900Z" fill="#2a6337"/>
+      <g transform="translate(110 668)">
+        <rect x="0" y="22" width="72" height="42" fill="#8a5a33"/>
+        <polygon points="-8,24 36,-10 80,24" fill="#5a2f1b"/>
+        <rect class="win" x="12" y="34" width="16" height="16" fill="#ffd27a"/>
+        <rect x="44" y="36" width="16" height="28" fill="#4a2c18"/>
+        <line x1="36" y1="-10" x2="36" y2="-42" stroke="#444" stroke-width="2"/>
+        <rect class="flag" x="36" y="-42" width="16" height="16" fill="#d52b1e"/>
+        <path d="M43 -38 h2 v4 h4 v2 h-4 v4 h-2 v-4 h-4 v-2 h4z" fill="#fff"/>
+      </g>
+      <g class="sway"><use href="#pine" transform="translate(50 738) scale(1.15)"/></g>
+      <g class="sway" style="animation-delay:-2s"><use href="#pine" transform="translate(250 744) scale(1.3)"/></g>
+      <g class="sway" style="animation-delay:-1s"><use href="#pine" transform="translate(328 756) scale(.95)"/></g>
+      <g class="sway" style="animation-delay:-3s"><use href="#pine" transform="translate(385 766) scale(1.5)"/></g>
+    </g>
+
+    <!-- foreground right: pines -->
+    <g class="near" style="animation-direction:alternate-reverse">
+      <path d="M1760 900 L1760 740 Q1450 690 1200 780 Q1100 820 1050 900Z" fill="#245a31"/>
+      <g class="sway" style="animation-delay:-1s"><use href="#pine" transform="translate(1505 728) scale(1.5)"/></g>
+      <g class="sway" style="animation-delay:-2.5s"><use href="#pine" transform="translate(1390 738) scale(1.1)"/></g>
+      <g class="sway" style="animation-delay:-.5s"><use href="#pine" transform="translate(1275 758) scale(1.35)"/></g>
+      <g class="sway" style="animation-delay:-3.5s"><use href="#pine" transform="translate(1205 782) scale(.95)"/></g>
+    </g>
+  </svg>
+  <!-- Optional real video: set VIDEO_URL in the script at the bottom -->
+  <video id="bg" autoplay muted loop playsinline></video>
+</div>
+<div class="shade" aria-hidden="true"></div>
+
+<main>
+  <h1>ETHAN ALAX &amp; CO.</h1>
+  <p class="sub">Help Center</p>
+  <p class="tag">We're here to help. Drop us a line!</p>
+
+  <section class="card" aria-labelledby="contact">
+    <h2 id="contact">Contact us</h2>
+    <div class="chips" role="group" aria-label="Topic">
+      <button type="button" class="chip" aria-pressed="true">Report an error</button>
+      <button type="button" class="chip" aria-pressed="false">Website update</button>
+      <button type="button" class="chip" aria-pressed="false">Hosting &amp; domain</button>
+      <button type="button" class="chip" aria-pressed="false">Something else</button>
+    </div>
+    <form id="help-form" novalidate>
+      <div class="field">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="email">Email*</label>
+        <input id="email" name="email" type="email" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea id="message" name="message"></textarea>
+      </div>
+      <button class="send" type="submit">SEND</button>
+      <p id="status" role="status" aria-live="polite"></p>
+    </form>
+    <p class="mail">Or email <a href="mailto:error@help.ethanalax.work.gd">error@help.ethanalax.work.gd</a></p>
+  </section>
+</main>
+
+<footer>Copyright &copy; 2026 Ethan Alax &amp; Co. - All Rights Reserved.</footer>
+
+<script>
+  // Want a real video instead of the animated scene? Put a Swiss nature clip (mp4) next to this file
+  // and set its name here, e.g. var VIDEO_URL = "switzerland.mp4";
+  var VIDEO_URL = "";
+  if (VIDEO_URL) { var v = document.getElementById("bg"); v.src = VIDEO_URL; v.style.display = "block"; v.play().catch(function(){}); }
+
+  var TO = "error@help.ethanalax.work.gd";
+  var topic = "Report an error";
+  document.querySelectorAll(".chip").forEach(function (c) {
+    c.addEventListener("click", function () {
+      document.querySelectorAll(".chip").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
+      c.setAttribute("aria-pressed", "true");
+      topic = c.textContent;
+    });
+  });
+
+  // Opens the visitor's email app with the message addressed to the help inbox.
+  // To send straight from the page, point the form at a form service (Formspree / Web3Forms) instead.
+  document.getElementById("help-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var name = this.name.value.trim(), email = this.email.value.trim(), message = this.message.value.trim();
+    var status = document.getElementById("status");
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      status.style.color = "#b3261e";
+      status.textContent = "Enter a valid email address so we can reply.";
+      this.email.focus();
+      return;
+    }
+    status.style.color = "#1d7a46";
+    var body = message + "\n\nTopic: " + topic + "\nName: " + (name || "-") + "\nEmail: " + email;
+    window.location.href = "mailto:" + TO + "?subject=" + encodeURIComponent("Help Center: " + topic + (name ? " (" + name + ")" : "")) + "&body=" + encodeURIComponent(body);
+    status.textContent = "Your email app should open with the message ready to send.";
+  });
+</script>
+</body>
+</html>
